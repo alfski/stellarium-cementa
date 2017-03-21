@@ -1,0 +1,43 @@
+// Name: Fisheye Repeat a 24 hour continuously
+// Author: Andrew Leahy
+// License: Public Domain
+// Description: Play a repeating 24 hour loop
+// ToDo: ground orientation 
+
+var speedup = 500; // 500 is about 3 minutes for 24 hours. Bigger is faster.
+var showDate = '2017-04-08T00:00:00'; // 8th April 2017 (10am)
+var showLocation = 'Bathurst, Australia';
+// Kandos -32.8547, 149.9784
+var showLat = -32.8547, showLong = 149.9784, showAlt = 628;
+var showName = 'Kandos', showPlanet = 'Earth';
+
+var showRunTime = 24*60*60 / speedup * 0.998264;
+
+core.setProjectionMode( 'ProjectionFisheye' );
+//core.setObserverLocation( showLocation, 0 );
+core.setObserverLocation( showLong, showLat, showAlt, 0, showName, showPlanet );
+core.moveToAltAzi( 90, 180, 0 ); // look at zenith
+StelMovementMgr.zoomTo( 190, 0 );
+
+core.setGuiVisible( false );
+
+//core.debug( core.getAllSkyCultureIDs() );
+core.setSkyCulture( 'Aboriginal Wiradjuri' );
+ConstellationMgr.setFlagArt( true );
+
+LandscapeMgr.setFlagCardinalsPoints( false ); // turn off NSEW
+LandscapeMgr.setFlagFog( true );
+
+core.setMilkyWayIntensity( 5.0 ); // can go up to 11
+
+core.debug('showRunTime:' + showRunTime ); // check in console (F12)
+
+MeteorShowers.setEnableLabels( false );
+SolarSystem.setFlagLabels( false );
+
+core.setTimeRate( speedup );
+
+while (1) { // do this forever
+  core.setDate( showDate );
+  core.wait( showRunTime );
+}
