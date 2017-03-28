@@ -1,21 +1,21 @@
 // Name: Fisheye Repeat a 24 hour continuously
 // Author: Andrew Leahy
 // License: Public Domain
-// Description: Play a repeating 24 hour loop
+// Description: Play a repeating 7 day loop starting at Date
 // ToDo: ground orientation 
 
 var speedup = 500; // 500 is about 3 minutes for 24 hours. Bigger is faster.
-var showDate = '2017-04-08T00:00:00'; // 8th April 2017 (10am)
-var showLocation = 'Bathurst, Australia';
+var date = '2017-04-08T00:00:00'; // 8th April 2017 midnight UTC about 10am local
+var location = 'Bathurst, Australia';
 // Kandos -32.8547, 149.9784
-var showLat = -32.8547, showLong = 149.9784, showAlt = 628;
-var showName = 'Kandos', showPlanet = 'Earth';
+var lat = -32.8547, long = 149.9784, alt = 628, name = 'Kandos', planet = 'Earth';
 
-var showRunTime = 24*60*60 / speedup * 0.998264;
+//var runTime = 24*60*60 / speedup * 0.998264; // day in seconds / speed * fudge
+var runTime = 7 * 24*60*60 / speedup * 0.9982; // one week in seconds / speed * fudge
 
 core.setProjectionMode( 'ProjectionFisheye' );
-//core.setObserverLocation( showLocation, 0 );
-core.setObserverLocation( showLong, showLat, showAlt, 0, showName, showPlanet );
+//core.setObserverLocation( location, 0 );
+core.setObserverLocation( long, lat, alt, 0, name, planet );
 core.moveToAltAzi( 90, 180, 0 ); // look at zenith
 StelMovementMgr.zoomTo( 190, 0 );
 
@@ -30,14 +30,18 @@ LandscapeMgr.setFlagFog( true );
 
 core.setMilkyWayIntensity( 5.0 ); // can go up to 11
 
-core.debug('showRunTime:' + showRunTime ); // check in console (F12)
+core.debug('runTime:' + runTime ); // check in console (F12)
 
 MeteorShowers.setEnableLabels( false );
 SolarSystem.setFlagLabels( false );
 
 core.setTimeRate( speedup );
 
+var i = 0;
+
 while (1) { // do this forever
-  core.setDate( showDate );
-  core.wait( showRunTime );
+  //core.debug('loop # ' + i );
+  core.setDate( date );
+  core.wait( runTime );
+  i++;
 }
