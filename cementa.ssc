@@ -2,7 +2,9 @@
 // Author: Andrew Leahy
 // License: Public Domain
 // Description: Play a repeating 7 day loop starting at Date
-// ToDo: ground orientation 
+// ToDo: ground orientation
+// 20170402 turn off star labels, increase milky way brightness a bit
+
 
 var speedup = 500; // 500 is about 3 minutes for 24 hours. Bigger is faster.
 var date = '2017-04-08T00:00:00'; // 8th April 2017 midnight UTC about 10am local
@@ -19,6 +21,8 @@ core.setObserverLocation( long, lat, alt, 0, name, planet );
 core.moveToAltAzi( 90, 180, 0 ); // look at zenith
 StelMovementMgr.zoomTo( 190, 0 );
 
+StarMgr.setLabelsAmount( 0 ); // set star labels & markings to off
+
 core.setGuiVisible( false );
 
 //core.debug( core.getAllSkyCultureIDs() );
@@ -28,7 +32,7 @@ ConstellationMgr.setFlagArt( true );
 LandscapeMgr.setFlagCardinalsPoints( false ); // turn off NSEW
 LandscapeMgr.setFlagFog( true );
 
-core.setMilkyWayIntensity( 5.0 ); // can go up to 11
+core.setMilkyWayIntensity( 5.5 ); // max is 10, watch out for bright spot around 4am
 
 core.debug('runTime:' + runTime ); // check in console (F12)
 
